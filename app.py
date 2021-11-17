@@ -4,7 +4,6 @@ import plotly.graph_objs as go
 from plotly.offline import *
 import plotly.express as px
 import parse as ps
-import flag
 
 init_notebook_mode(connected=True)
 
@@ -15,7 +14,7 @@ data = []
 for country in df:
     data.append(go.Bar(name=country, 
 	               x=df[country]["sizes"], y=df[country]["amounts"],
-	               text=flag.flag(country) + country, textposition='auto',
+	               text=country, textposition='auto',
 	               textfont=dict(color='white')))
 fig_title = 'Torrent'
 layout = dict(title={'text':fig_title, 'x':0.5},
