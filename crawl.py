@@ -13,7 +13,7 @@ class TorrentCrawler:
     et c'est lui qui va nous retourner les infomations que l'on vas traiter
     par la suite
     """
-    def __init__(self, torrentfile, time = 20):
+    def __init__(self, torrentfile, time = 30):
         """
         Dans ce constructeur nous allons lire les informations qui se trouvent
         sur le fichier torrent et lancer le DHT (Distributed hash table) et 
