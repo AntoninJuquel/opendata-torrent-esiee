@@ -27,10 +27,10 @@ options.add_experimental_option("prefs", p)
 #driver = uc.Chrome(options=options)
 driver = uc.Chrome()
 with driver:
-    driver.get('http://unblocked-pw.github.io/')
-    url = "https://ettv.unblockit.ws/"
+    driver.get('https://unblockit.bz/')
+    url = "https://ettv.unblockit.bz/"
     ettv = driver.find_element_by_partial_link_text('ETTV')
-    ettv.click()
+    #ettv.click()
     #time.sleep(8)
     #movies = driver.find_element_by_partial_link_text('TV Shows')
     #movies.click()
@@ -38,14 +38,18 @@ with driver:
         print(f"gonna sleep for {i} sec")
         time.sleep(1)
     #print(driver.page_source)
-    driver.get('https://ettv.unblockit.kim/torrents.php?parent_cat=Movies&parent_cat=Movies&order=desc&sort=seeders')
+    driver.get('https://ettv.unblockit.bz/torrents.php?parent_cat=Movies&parent_cat=Movies&order=desc&sort=seeders')
     #print(driver.page_source)
     #print("this is the TV page")
     html = driver.page_source
     matches = re.findall(r'<a[^>]* href="([^"]*)"', html)
+    matches = [e for e in matches if "/torrent/" in e]
     fileDict = {}
+    print(matches)
     for match in matches[:20]:
         if "/torrent/" in match:
+            print("Going TO : !!!")
+            print(match)
             url = match
             time.sleep(2)
             driver.get(url)
