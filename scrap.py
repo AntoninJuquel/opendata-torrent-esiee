@@ -38,14 +38,14 @@ with driver:
         print(f"gonna sleep for {i} sec")
         time.sleep(1)
     #print(driver.page_source)
-    driver.get('https://ettv.unblockit.bz/torrents.php?parent_cat=Movies&parent_cat=Movies&order=desc&sort=seeders')
+    driver.get('https://ettv.unblockit.bz/torrents.php?sort=seeders&order=desc')
     #print(driver.page_source)
     #print("this is the TV page")
     html = driver.page_source
     matches = re.findall(r'<a[^>]* href="([^"]*)"', html)
     matches = [e for e in matches if "/torrent/" in e]
     fileDict = {}
-    print(matches)
+    print(len(matches))
     for match in matches[:20]:
         if "/torrent/" in match:
             print("Going TO : !!!")
