@@ -15,7 +15,7 @@ data = []
 for country in df:
     data.append(go.Bar(name=country, 
 	               x=df[country]["sizes"], y=df[country]["amounts"],
-	               text=flag.flag(country), textposition='auto',
+	               text=flag.flag(country) + country, textposition='auto',
 	               textfont=dict(color='white')))
 fig_title = 'Torrent'
 layout = dict(title={'text':fig_title, 'x':0.5},
