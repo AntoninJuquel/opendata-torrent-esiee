@@ -19,7 +19,9 @@ def threaded_crawl(file):
     print(countries)
     res = { 'date' : str(today),
             'total people': len(ip),
-            'size' : data[file],
+            'size' : data[file]["size"],
+            'cat' : data[file]["cat"],
+            'lang' : data[file]["lang"],
             'ip' : ip,
             'countries' : countries
             }
