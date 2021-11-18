@@ -34,9 +34,6 @@ with driver:
     #time.sleep(8)
     #movies = driver.find_element_by_partial_link_text('TV Shows')
     #movies.click()
-    for i in range(10):
-        print(f"gonna sleep for {i} sec")
-        time.sleep(1)
     #print(driver.page_source)
     driver.get('https://ettv.unblockit.bz/torrents.php?sort=seeders&order=desc')
     #print(driver.page_source)
@@ -46,8 +43,10 @@ with driver:
     matches = [e for e in matches if "/torrent/" in e]
     fileDict = {}
     print(len(matches))
-    for match in matches[:20]:
+    for match in matches[:2]:
         if "/torrent/" in match:
+            with open('bulkTorrents/index.json') as json_file:
+                fileDict = json.load(json_file)
             print("Going TO : !!!")
             print(match)
             url = match
@@ -57,7 +56,11 @@ with driver:
             html = driver.page_source
             torrents = re.findall(r'<a[^>]* href="([^"]*)"', html)
             size = driver.find_element_by_xpath("/html/body/div/div[3]/div/div[2]/div[3]/div[1]/div[1]/fieldset/dl[4]/dd")
+            cat = driver.find_element_by_xpath("/html/body/div/div[3]/div/div[2]/div[3]/div[1]/div[1]/fieldset/dl[2]/dd")
+            lang = driver.find_element_by_xpath("/html/body/div/div[3]/div/div[2]/div[3]/div[1]/div[1]/fieldset/dl[3]/dd")
             filesize = size.text
+            category = cat.text
+            language = lang.text
             filesize = getfilesize(filesize)
             #print("Your file is : {} MB.".format(filesize))
             torrentFileUrl = ""
@@ -65,14 +68,13 @@ with driver:
                 if "etorrent.click/torrents" in torrent:
                     torrentFileUrl = torrent
             torrentFilename = torrentFileUrl.replace("https://etorrent.click/torrents/","")
-            fileDict[torrentFilename] = filesize
+            fileDict[torrentFilename] = {"size": filesize, "cat": category, "lang": language}
             res = requests.get(torrentFileUrl)
             with open("bulkTorrents/" + torrentFilename, 'wb') as file:
                 file.write(res.content)
-    #write json file
-    filename = 'bulkTorrents/index.json'
-    with open(filename, 'w') as outfile:
-        jsonString = json.dumps(fileDict)
-        outfile.write(jsonString)
+            filename = 'bulkTorrents/index.json'
+            with open(filename, 'w') as outfile:
+                jsonString = json.dumps(fileDict)
+                outfile.write(jsonString)
 
 
