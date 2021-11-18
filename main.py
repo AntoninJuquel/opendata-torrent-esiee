@@ -12,7 +12,7 @@ f = open('bulkTorrents/index.json','r')
 data = json.load(f)
 
 def threaded_crawl(file):
-    crawler = TorrentCrawler(mypath + "/" + file,time=30)
+    crawler = TorrentCrawler(mypath + "/" + file,time=20)
     ip = crawler.get_peers_raw()
     countries = crawler.get_countries()
     today = date.today()
@@ -33,15 +33,12 @@ def threaded_crawl(file):
         outfile.write(jsonString)
         #json.dump(jsonString, outfile)
 
-print(data)
-i = 1
 for file in files:
     if file != "index.json":
-        print(i, "/", len(files))
-        i += 1;
+        print(file)
         threaded_crawl(file)
-        #thread = Thread(target=threaded_crawl, args=(file,)) 
-        #thread.start()
+        thread = Thread(target=threaded_crawl, args=(file,)) 
+        thread.start()
 
 
 
