@@ -68,7 +68,7 @@ class TorrentCrawler:
         """
         Méthode pour obtenir le pays associé à l'addresse ip
         """
-        url = "https://ipinfo.io/{}/json".format(ip)
+        url = "https://ipinfo.io/{}/json?token=8cf4887baf8f77".format(ip)
         res = requests.get(url)
         if res.status_code != 200:
             return "Error " + str(res.status_code)
