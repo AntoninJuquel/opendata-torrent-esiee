@@ -43,8 +43,11 @@ with driver:
     matches = [e for e in matches if "/torrent/" in e]
     fileDict = {}
     print(len(matches))
-    for match in matches[:2]:
+    i = 0
+    for match in matches:
         if "/torrent/" in match:
+            i += 1
+            print(i,"/",len(match))
             with open('bulkTorrents/index.json') as json_file:
                 fileDict = json.load(json_file)
             print("Going TO : !!!")

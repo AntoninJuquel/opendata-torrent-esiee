@@ -34,10 +34,14 @@ def threaded_crawl(file):
         #json.dump(jsonString, outfile)
 
 print(data)
+i = 1
 for file in files:
     if file != "index.json":
-        thread = Thread(target=threaded_crawl, args=(file,)) 
-        thread.start()
+        print(i, "/", len(files))
+        i += 1;
+        threaded_crawl(file)
+        #thread = Thread(target=threaded_crawl, args=(file,)) 
+        #thread.start()
 
 
 
