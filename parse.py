@@ -18,7 +18,13 @@ def parse(path_to_json):
         json.dump(data, outfile, indent= 4)
 
     data = {}
-
+    final = {
+        "abs": 
+        {
+            "sizes":[], 
+            "amounts":[]
+        }
+    }
     for j in json_files:
         # Opening JSON file
         f = open(path_to_json + j,"r")
@@ -26,7 +32,6 @@ def parse(path_to_json):
         # returns JSON object as
         # a dictionary
         data = json.load(f)
-
         for country in data["countries"]:
             if country in my_dict:
                 if data["size"] in my_dict[country]:
@@ -35,12 +40,18 @@ def parse(path_to_json):
                     my_dict[country][data["size"]] = data["countries"][country]
             else:
                 my_dict[country] = { data["size"]: data["countries"][country] }
+
+            if(data["size"] not in final["abs"]["sizes"]):
+                final["abs"]["sizes"].append(data["size"])
+                final["abs"]["amounts"].append(0)
+                final["abs"]["sizes"] = sorted(final["abs"]["sizes"])
         f.close()
+    
+    final["abs"]["sizes"] = [str(x) for x in final["abs"]["sizes"]]
 
     with open('my_dict.json', 'w') as outfile:
         json.dump(my_dict, outfile, indent= 4)
 
-    final = {}
     for country in my_dict:
         a_test = my_dict[country]
         dictionary_items = a_test.items()
@@ -55,12 +66,4 @@ def parse(path_to_json):
         
     return my_dict
 
-def get_keys(data_dict):
-    return list(data_dict.keys())
-
-def get_values(data_dict):
-    return list(data_dict.values())
-
 parse("runs/")
-#print(list(parse("runs/").keys()))
-#print(list(parse("runs/").values()))
