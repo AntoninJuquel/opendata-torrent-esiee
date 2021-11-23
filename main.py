@@ -36,7 +36,7 @@ def threaded_crawl(file):
 i = 0
 for file in files:
     if file != "index.json":
-        if i<10:
+        if i<25:
             i += 1
             thread = Thread(target=threaded_crawl, args=(file,)) 
             thread.start()

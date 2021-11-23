@@ -30,10 +30,11 @@ def getfilesize(filesize):
     else :
         return None 
 
-options = webdriver.ChromeOptions()
-p = {"download.default_directory": "/home/porus/Coding/opendata-torrent/bulkTorrents/"}
-options.add_argument("user-agent=Mozilla/5.0 (Linux; {Android Version}; {Build Tag etc.})  AppleWebKit/{WebKit Rev} (KHTML, like Gecko) Chrome/{Chrome Rev} Mobile Safari/{WebKit Rev}")
-options.add_experimental_option("prefs", p)
+options = uc.ChromeOptions()
+options.headless=True
+#p = {"download.default_directory": "/home/porus/Coding/opendata-torrent/bulkTorrents/"}
+#options.add_argument("user-agent=Mozilla/5.0 (Linux; {Android Version}; {Build Tag etc.})  AppleWebKit/{WebKit Rev} (KHTML, like Gecko) Chrome/{Chrome Rev} Mobile Safari/{WebKit Rev}")
+#options.add_experimental_option("prefs", p)
 #driver = webdriver.Chrome(options=options)
 #driver = uc.Chrome(options=options)
 driver = uc.Chrome()
@@ -61,7 +62,7 @@ with driver:
         print(i)
     fileDict = {}
     i = 0
-    for match in all_matches[40:]:
+    for match in all_matches:
         i += 1
         print(i,"/",len(all_matches))
         with open('bulkTorrents/index.json') as json_file:
