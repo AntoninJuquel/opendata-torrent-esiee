@@ -59,10 +59,9 @@ with driver:
     print(len(all_matches))
     for i in all_matches:
         print(i)
-    exit()
     fileDict = {}
     i = 0
-    for match in all_matches[30:]:
+    for match in all_matches[40:]:
         i += 1
         print(i,"/",len(all_matches))
         with open('bulkTorrents/index.json') as json_file:
@@ -71,12 +70,18 @@ with driver:
         print(match)
         url = match
         time.sleep(2)
+        if match.startswith("/torrent"):
+            url = "https://ettv.unblockit.bz" + match
         driver.get(url)
         time.sleep(1)
         html = driver.page_source
         torrents = re.findall(r'<a[^>]* href="([^"]*)"', html)
+        if len(torrents) == 0:
+            continue
+        print(torrents)
         torrentFileUrl = ""
         for torrent in torrents:
+            print("SEARCHING TORRENT FILE")
             if "etorrent.click/torrents" in torrent:
                 torrentFileUrl = torrent
         torrentFilename = torrentFileUrl.replace("https://etorrent.click/torrents/","")
@@ -99,7 +104,6 @@ with driver:
             continue
         #print("Your file is : {} MB.".format(filesize))
         print("DOWNLOADING THE FILE")
-        torrentFileUrl = ""
         fileDict[torrentFilename] = {"size": filesize, "cat": category, "lang": language}
         res = requests.get(torrentFileUrl)
         with open("bulkTorrents/" + torrentFilename, 'wb') as file:
