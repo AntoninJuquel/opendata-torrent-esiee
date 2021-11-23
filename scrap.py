@@ -2,6 +2,7 @@ import undetected_chromedriver.v2 as uc
 import re
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+import sys
 import time
 import json
 import requests
@@ -62,6 +63,7 @@ with driver:
         print(i)
     fileDict = {}
     i = 0
+    all_matches = all_matches[220:]
     for match in all_matches:
         i += 1
         print(i,"/",len(all_matches))
@@ -106,9 +108,25 @@ with driver:
         #print("Your file is : {} MB.".format(filesize))
         print("DOWNLOADING THE FILE")
         fileDict[torrentFilename] = {"size": filesize, "cat": category, "lang": language}
-        res = requests.get(torrentFileUrl)
-        with open("bulkTorrents/" + torrentFilename, 'wb') as file:
-            file.write(res.content)
+        if torrentFileUrl != "":
+            res = requests.get(torrentFileUrl)
+            total_length = res.headers.get('content-length')
+            with open("bulkTorrents/" + torrentFilename, 'wb') as f:
+                #file.write(res.content)
+                #total_length = response.headers.get('content-length')
+
+                if total_length is None: # no content length header
+                    f.write(res.content)
+                else:
+                    dl = 0
+                    total_length = int(total_length)
+                    for data in res.iter_content(chunk_size=4096):
+                        dl += len(data)
+                        f.write(data)
+                        done = int(50 * dl / total_length)
+                        sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50-done)) )    
+                        sys.stdout.flush()
+
         filename = 'bulkTorrents/index.json'
         with open(filename, 'w') as outfile:
             jsonString = json.dumps(fileDict)
