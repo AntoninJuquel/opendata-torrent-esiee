@@ -33,11 +33,13 @@ def threaded_crawl(file):
         outfile.write(jsonString)
         #json.dump(jsonString, outfile)
 
+i = 0
 for file in files:
     if file != "index.json":
-        print(file)
-        thread = Thread(target=threaded_crawl, args=(file,)) 
-        thread.start()
-
-
-
+        if i<10:
+            i += 1
+            thread = Thread(target=threaded_crawl, args=(file,)) 
+            thread.start()
+        else:
+            threaded_crawl(file)
+            i = 0
