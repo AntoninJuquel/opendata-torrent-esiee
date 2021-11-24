@@ -63,7 +63,7 @@ with driver:
         print(i)
     fileDict = {}
     i = 0
-    all_matches = all_matches[220:]
+    all_matches = all_matches[500:]
     for match in all_matches:
         i += 1
         print(i,"/",len(all_matches))
