@@ -1,4 +1,6 @@
+from logging import log
 from os import name
+from numpy import exp, log10, log2
 from numpy.core.fromnumeric import size, sort
 import pandas as pd
 import plotly
@@ -25,7 +27,7 @@ def get_geo_fig():
             lat = [lat_lng[0]],
             lon = [lat_lng[1]],
             marker = dict(
-                size = 10,
+                size = log2(df[data]['size']),
                 color = 'rgb(0,0,0)',
                 line_color='rgb(255,255,255)',
                 line_width=0.25,
@@ -33,11 +35,7 @@ def get_geo_fig():
             )))
 
   fig_title = 'Torrent'
-  layout = dict(title={'text':fig_title, 'x':0.5},
-                barmode='stack', 
-                xaxis_title="Taille en mo",
-                yaxis_title="Nombre de personnes",
-              )
+  layout = dict(title={'text':fig_title, 'x':0.5})
 
   fig = go.Figure(data=geo_data, layout=layout)
   return fig
