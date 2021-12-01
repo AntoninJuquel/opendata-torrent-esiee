@@ -4,12 +4,8 @@ from dash import State
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly
-from app import get_bar_fig
+from app import get_bar_fig, get_geo_fig
 from dash.dependencies import Input, Output
-
-# pip install pyorbital
-from pyorbital.orbital import Orbital
-satellite = Orbital('TERRA')
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -39,8 +35,6 @@ i = 1
 def update_metrics(n):
     global i
     i+=1
-    lon, lat, alt = satellite.get_lonlatalt(datetime.datetime.now())
-    style = {'padding': '5px', 'fontSize': '16px'}
     return [
             i,
     ]
