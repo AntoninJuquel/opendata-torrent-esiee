@@ -27,7 +27,7 @@ class TorrentCrawler:
         self.dht = btdht.DHT()
         self.dht.start() #should wait about 1 sec for it to start
         self.peers = self.get_peers_raw()
-        self.countries_dict = self.get_countries()
+        self.countries_dict = {}
 
     def get_peers_raw(self, rerun = True):
         """Cette fonction retourne les personnes qui téléchargent ou bien 
@@ -48,23 +48,27 @@ class TorrentCrawler:
                 sleep(1)
         return self.peers
 
-    def get_countries(self):
+    def get_countries_info(self):
         """
         Méthode pour obtenir un dictionnaire de pays
         avec le code du pays en clé et pour valeur le nombre de peers
         de ce pays
         """
         countries_dict = {}
+        locs = []
         for ipinfo in self.peers:
-            country = self._get_ip_country(ipinfo[0]) # 0: ip 1:port
+            info = self._get_info_country(ipinfo[0])
+            country = info[0]
+            loc = info[1]
+            locs.append(loc)
             if country in countries_dict:
                 countries_dict[country] += 1
             else:
                 countries_dict[country] = 1
-        return countries_dict
+        return [countries_dict, locs]
 
 
-    def _get_ip_country(self, ip):
+    def _get_info_country(self, ip):
         """
         Méthode pour obtenir le pays associé à l'addresse ip
         """
@@ -72,7 +76,7 @@ class TorrentCrawler:
         res = requests.get(url)
         if res.status_code != 200:
             return "Error " + str(res.status_code)
-        return res.json()["country"]
+        return [res.json()["country"], res.json()["loc"]]
 
 #crawler = TorrentCrawler("dataTorrent/Series/b459-Rick.and.Morty.S04E04.Claw.and.Hoarder.Special.Ricktims.Morty.HDTV.x264-CRiMSON[TGx]-27342.torrent")
 #print("Number of peers :",len(crawler.get_peers_raw()))
