@@ -53,7 +53,7 @@ def update_graph_live(n):
 @app.callback(Output('live-update-map', 'figure'),
               Input('interval-component', 'n_intervals'))
 def update_map_live(n):
-    return get_geo_fig()
+    return get_bar_fig()
 
 # button
 
