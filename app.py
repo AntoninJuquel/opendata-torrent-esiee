@@ -64,4 +64,5 @@ def get_bar_fig():
 
 
 
-plotly.offline.plot(get_bar_fig(), filename='stackbar.html')
+if __name__ == '__main__':
+  plotly.offline.plot(get_bar_fig(), filename='stackbar.html')
