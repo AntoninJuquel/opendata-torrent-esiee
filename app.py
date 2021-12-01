@@ -10,26 +10,28 @@ import country_converter as coco
 
 init_notebook_mode(connected=True)
 def get_geo_fig():
+
   ps.parse("runs/")
-  df = pd.read_json("final.json")
+  df = pd.read_json("data.json")
 
   geo_data = []
   
-  for country in df:
-      for i in range(len(df[country]["sizes"])):
-        index = len(df[country]["sizes"]) - i - 1
-        geo_data.append(go.Scattergeo(
-            name=df[country]["amounts"][index],
-            locationmode = 'ISO-3',
-            locations = [coco.convert(names=[f"{country}"], to='ISO3')],
-            text =  df[country]["sizes"][index],
+  for data in df:
+    for locations in df[data]["locs"]:
+      lat_lng = locations.split(",")
+      geo_data.append(go.Scattergeo(
+            name=f"",
+            text = f"{df[data]['size']} mo",
+            lat = [lat_lng[0]],
+            lon = [lat_lng[1]],
             marker = dict(
-                size = index * 10,
-                color = f'rgb({index * 255 / len(df[country]["sizes"])},0,0)',
+                size = 10,
+                color = 'rgb(0,0,0)',
                 line_color='rgb(255,255,255)',
                 line_width=0.25,
                 sizemode = 'area'
             )))
+
   fig_title = 'Torrent'
   layout = dict(title={'text':fig_title, 'x':0.5},
                 barmode='stack', 
@@ -65,4 +67,4 @@ def get_bar_fig():
 
 
 if __name__ == '__main__':
-  plotly.offline.plot(get_bar_fig(), filename='stackbar.html')
+  plotly.offline.plot(get_geo_fig(), filename='stackbar.html')
