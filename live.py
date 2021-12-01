@@ -3,6 +3,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly
+from app import get_bar_fig
 from dash.dependencies import Input, Output
 
 # pip install pyorbital
@@ -41,8 +42,7 @@ def update_metrics(n):
 @app.callback(Output('live-update-graph', 'figure'),
               Input('interval-component', 'n_intervals'))
 def update_graph_live(n):
-    from app import fig
-    return fig
+    return get_bar_fig()
 
 
 
