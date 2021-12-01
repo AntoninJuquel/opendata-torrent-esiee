@@ -1,6 +1,10 @@
 import os, json
 import pandas as pd
 
+def sizeToIntervalStr(size):
+  sizeint = int(float(size))
+  hundreds = sizeint-sizeint%100
+  return f"{hundreds} - {hundreds + 99}"
 
 def parse(path_to_json):
     json_files = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
@@ -61,9 +65,9 @@ def parse(path_to_json):
             new_dict["sizes"].append(str(tpl[0]))
             new_dict["amounts"].append(tpl[1])
         final[country] = new_dict
+    
+    for country in final:
+        final[country]["sizes"] = [sizeToIntervalStr(size) for size in final[country]["sizes"]]
+
     with open('final.json', 'w') as outfile:
         json.dump(final, outfile, indent= 4)
-        
-    return my_dict
-
-parse("runs/")
