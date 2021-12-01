@@ -14,7 +14,9 @@ data = json.load(f)
 def threaded_crawl(file):
     crawler = TorrentCrawler(mypath + "/" + file,time=20)
     ip = crawler.get_peers_raw()
-    countries = crawler.get_countries()
+    info = crawler.get_countries_info()
+    countries = info[0]
+    locs = info[1]
     today = date.today()
     print(countries)
     res = { 'date' : str(today),
@@ -23,6 +25,7 @@ def threaded_crawl(file):
             'cat' : data[file]["cat"],
             'lang' : data[file]["lang"],
             'ip' : ip,
+            'locs': locs,
             'countries' : countries
             }
     #jsonString = json.dumps(res)

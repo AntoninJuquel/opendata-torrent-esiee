@@ -68,7 +68,7 @@ with driver:
             if match not in all_matches:
                 all_matches.append(match)
                 incrementor += 1
-                if incrementor == 3:
+                if incrementor == 1:
                     break
     print(all_matches)
     print(len(all_matches))
