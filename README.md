@@ -6,3 +6,6 @@ https://pytutorial.com/python-get-country-from-ip-python
 https://realpython.com/beautiful-soup-web-scraper-python/
 https://stackoverflow.com/questions/51213717/beautiful-soup-not-loading-the-entire-page
 https://stackoverflow.com/questions/64165726/selenium-stuck-on-checking-your-browser-before-accessing-url
+
+
+https://github.com/ultrafunkamsterdam/undetected-chromedriver/issues/258
