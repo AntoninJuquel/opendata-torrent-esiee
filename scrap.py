@@ -1,5 +1,5 @@
 import undetected_chromedriver.v2 as uc
-from xvfbwrapper import Xvfb
+#from xvfbwrapper import Xvfb
 import re
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -7,6 +7,7 @@ import sys
 import time
 import json
 import requests
+import os
 
 category_urls = [
         "https://ettv.unblockit.bz/torrents.php?parent_cat=TV&parent_cat=TV&sort=seeders&order=desc",
@@ -42,9 +43,10 @@ def execute_scrapping(n):
 #options.add_experimental_option("prefs", p)
 #driver = webdriver.Chrome(options=options)
 #driver = uc.Chrome(options=options)
+
 def execute_scrapping(n):
-    vdisplay = Xvfb(width=800, height=1280)
-    vdisplay.start()
+    #vdisplay = Xvfb(width=800, height=1280)
+    #vdisplay.start()
     options = uc.ChromeOptions()
     options.add_argument(f'--no-first-run --no-service-autorun --password-store=basic')
     options.user_data_dir = f'./tmp/test_undetected_chromedriver'
@@ -159,7 +161,7 @@ def execute_scrapping(n):
                 jsonString = json.dumps(fileDict)
                 outfile.write(jsonString)
         
-        vdisplay.stop()
+        #vdisplay.stop()
 
 if __name__ == '__main__':
-    execute_scrapping(1)
+    execute_scrapping(10)
