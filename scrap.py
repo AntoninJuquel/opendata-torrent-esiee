@@ -1,5 +1,5 @@
 import undetected_chromedriver.v2 as uc
-#from xvfbwrapper import Xvfb
+from xvfbwrapper import Xvfb
 import re
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -21,6 +21,10 @@ category_urls = [
 ]
 
 def getfilesize(filesize):
+    """
+    Cette fonction retourne la taille en MB des fichiers depuis
+    leur descriptions sur la page web
+    """
     filesize = filesize.split(" ")
     num = float(filesize[0])
     unit = filesize[1]
@@ -33,26 +37,24 @@ def getfilesize(filesize):
     else :
         return None 
 
-"""
-def execute_scrapping(n):
-    options = uc.ChromeOptions()
-    options.headless=True
-"""
-#p = {"download.default_directory": "/home/porus/Coding/opendata-torrent/bulkTorrents/"}
-#options.add_argument("user-agent=Mozilla/5.0 (Linux; {Android Version}; {Build Tag etc.})  AppleWebKit/{WebKit Rev} (KHTML, like Gecko) Chrome/{Chrome Rev} Mobile Safari/{WebKit Rev}")
-#options.add_experimental_option("prefs", p)
-#driver = webdriver.Chrome(options=options)
-#driver = uc.Chrome(options=options)
+def execute_scrapping(n,docker=False):
+    """
+    Cette fonction va scrapper n nombre de fichiers .torrent
+    pour chaque catégorie (tv,movie,software,music,games,anime,books,adult)
+    Il va prendre les plus populaire à chaque fois
 
-def execute_scrapping(n):
-    #vdisplay = Xvfb(width=800, height=1280)
-    #vdisplay.start()
+    Si l'argument docker est vrai, il va tenter de lancer selenium dans une
+    fenêtre virtuelle
+    """
     options = uc.ChromeOptions()
-    options.add_argument(f'--no-first-run --no-service-autorun --password-store=basic')
-    options.user_data_dir = f'./tmp/test_undetected_chromedriver'
-    options.add_argument(f'--disable-gpu')
-    options.add_argument(f'--no-sandbox')
-    options.add_argument(f'--disable-dev-shm-usage')
+    if docker:
+        vdisplay = Xvfb(width=800, height=1280)
+        vdisplay.start()
+        options.add_argument(f'--no-first-run --no-service-autorun --password-store=basic')
+        options.user_data_dir = f'./tmp/test_undetected_chromedriver'
+        options.add_argument(f'--disable-gpu')
+        options.add_argument(f'--no-sandbox')
+        options.add_argument(f'--disable-dev-shm-usage')
     driver = uc.Chrome(options=options,headless=False)
 
     with driver:
@@ -160,8 +162,13 @@ def execute_scrapping(n):
             with open(filename, 'w') as outfile:
                 jsonString = json.dumps(fileDict)
                 outfile.write(jsonString)
-        
-        #vdisplay.stop()
+
+        if docker:
+            vdisplay.stop()
 
 if __name__ == '__main__':
+    """
+    Si on appelle scrap.py directement, on va effectuer un scap
+    qui n'est pas sous docker et qui aura un n = 10
+    """
     execute_scrapping(10)
