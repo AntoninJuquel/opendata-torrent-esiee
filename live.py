@@ -9,21 +9,23 @@ from dash.dependencies import Input, Output
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+#app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__)
 app.layout = html.Div(
     html.Div([
         html.H4('Opendata Torrent'),
+        html.Button(children='pause', id='pause-btn', n_clicks=0),
         html.Div(id='live-update-text'),
         dcc.Graph(id='live-update-graph'),
         dcc.Graph(id='live-update-map'),
     html.Div(dcc.Input(id='input-on-submit', type='text')),
-    html.Button('Submit', id='submit-val', n_clicks=0),
     html.Div(id='container-button-basic',
              children='Enter a value and press submit'),
         dcc.Interval(
             id='interval-component',
             interval=1*1000, # in milliseconds
-            n_intervals=0
+            n_intervals=0,
+            disabled=False
         )
     ])
 )
@@ -52,16 +54,15 @@ def update_map_live(n):
 # button
 
 @app.callback(
-    Output('container-button-basic', 'children'),
-    Input('submit-val', 'n_clicks'),
-    State('input-on-submit', 'value')
+    Output('interval-component', 'disabled'),
+    Output('pause-btn', 'children'),
+    Input('pause-btn', 'n_clicks')
 )
-def update_output(n_clicks, value):
-    return 'The input value was "{}" and the button has been clicked {} times'.format(
-        value,
-        n_clicks
-    )
-
+def update_output(n_clicks):
+    if n_clicks % 2 == 0:
+        return False, "Pause"
+    else :
+        return True, "Play"
 
 if __name__ == '__main__':
     app.run_server(debug=True)

@@ -12,7 +12,10 @@ import country_converter as coco
 
 init_notebook_mode(connected=True)
 def get_geo_fig():
-
+  """
+  Cette fonction va lire les fichiers dans le dossiers runs
+  et va retourner figure plotly qui est une carte du monde
+  """
   ps.parse("runs/")
   df = pd.read_json("data.json")
 
@@ -41,6 +44,10 @@ def get_geo_fig():
   return fig
 
 def get_bar_fig():
+  """
+  Cette fonction va lire les fichiers dans le dossiers runs et les parser
+  et va retourner un histogramme
+  """
   ps.parse("runs/")
   df = pd.read_json("final.json")
 
