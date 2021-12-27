@@ -15,6 +15,9 @@ app.layout = html.Div(
     html.Div([
         html.H4('Opendata Torrent'),
         html.Button(children='pause', id='pause-btn', n_clicks=0),
+        html.Button(children='fetch new data', id='fetch-new-data-btn', n_clicks=0),
+        html.Div(dcc.Input(id='num-of-torrent-input', type='text')),
+        html.Button(children='scrape new torrents', id='scrape-new-torrents-btn', n_clicks=0),
         html.Div(id='live-update-text'),
         dcc.Graph(id='live-update-graph'),
         dcc.Graph(id='live-update-map'),
