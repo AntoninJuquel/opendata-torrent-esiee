@@ -9,6 +9,9 @@ from dash.dependencies import Input, Output
 from progress import ProgressManager
 
 from scrap import execute_scrapping
+from multithreadcrawler import crawl_by_batch
+
+from threading import Thread
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -27,6 +30,8 @@ app.layout = html.Div(
 
         # useless text fields
         html.Div(id='live-update-text-3'),
+        html.Div(id='live-update-text-4'),
+
         html.Div(dcc.Input(id='input-on-submit', type='text')),
     html.Div(id='container-button-basic',
              children='Enter a value and press submit'),
@@ -74,8 +79,21 @@ def scrape_torrent_files(n_clicks, value):
         return ""
     if value.isnumeric():
         value = int(value)
-        execute_scrapping(value)
-        return "Scrapped {} files !".format(value * 8)
+        thread = Thead(target=execute_scrapping,args=(value))
+        thread.start()
+        ProgressManager().create_progress("selenium",scrapeNum=value)
+        return "Scrapping {} files !".format(value * 8)
+    return ""
+
+@app.callback(
+    Output('live-update-text-4', 'children'),
+    Input('fetch-new-data-btn', 'n_clicks'),
+)
+def crawl_through_torrent_files(n_clicks):
+    if n_clicks != 0:
+        ProgressManager().create_progress("runs")
+        thread = Thread(target=crawl_by_batch)
+        thread.start()
     return ""
 
 
