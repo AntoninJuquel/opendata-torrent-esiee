@@ -61,11 +61,22 @@ def update_map_live(n):
     Output('pause-btn', 'children'),
     Input('pause-btn', 'n_clicks')
 )
-def update_output(n_clicks):
+def pause_play(n_clicks):
     if n_clicks % 2 == 0:
         return False, "Pause"
     else :
         return True, "Play"
+
+
+@app.callback(
+    Input('scrape-new-torrents-btn', 'n_clicks'),
+    State('num-of-torrent-input', 'value')
+)
+def scrape_torrent_files(value):
+    if value.isnumeric():
+        value = int(value)
+        execute_scrapping(value)
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
