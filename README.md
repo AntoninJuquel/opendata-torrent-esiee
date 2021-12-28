@@ -3,19 +3,28 @@
 ## Install
 
 Prerequisites :
-
 - docker
-- chromedriver (optional)
+- snap (to install the latest version of chromium)
+- chromium
+- gcc
+- pip 
+- virtualenv (to install in a virtualenv)
 
 ``` shell
-sudo apt install docker.io
-sudo apt install chromium-browser # version above 95
+sudo apt-get install docker.io
+sudo apt install snapd
+sudo snap install chromium # version above 95
+sudo apt-get install build-essential
+sudo apt-get install python3-pip
+sudo pip3 install virtualenv 
 ```
 
-Now launch the install script
+Now install the python dependencies
 
 ``` shell
-sudo python install.py
+virtualenv env
+source env/bin/activate # recommended to use a virtual environment
+pip install -r requirements.txt
 ```
 
 ## Usage
