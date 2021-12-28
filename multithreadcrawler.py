@@ -59,3 +59,10 @@ def crawl_by_batch():
             if thread.is_alive():
                 thread_still_running += 1
     ProgressManager().write_line("finished crawling")
+
+
+def purge_runs():
+    mypath = "runs/"
+    files = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+    for f in files:
+        os.remove("runs/"+f)

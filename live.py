@@ -9,9 +9,16 @@ from dash.dependencies import Input, Output
 from progress import ProgressManager
 
 from scrap import execute_scrapping
-from multithreadcrawler import crawl_by_batch
+from multithreadcrawler import crawl_by_batch, purge_runs
 
 from threading import Thread
+
+red_button_style = {'background-color': 'red',
+                    'color': 'white',
+                    'height': '50px',
+                    'width': '140px',
+                    'margin-top': '50px',
+                    'margin-left': '50px'}
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -23,6 +30,7 @@ app.layout = html.Div(
         html.Button(children='fetch new data', id='fetch-new-data-btn', n_clicks=0),
         html.Div(dcc.Input(id='num-of-torrent-input', type='text')),
         html.Button(children='scrape new torrents', id='scrape-new-torrents-btn', n_clicks=0),
+        html.Button(children='purge data', id='purge-data-btn', n_clicks=0, style=red_button_style),
         html.Div(id='live-update-text'),
         html.Div(id='live-update-text-2'),
         dcc.Graph(id='live-update-graph'),
@@ -31,6 +39,7 @@ app.layout = html.Div(
         # useless text fields
         html.Div(id='live-update-text-3'),
         html.Div(id='live-update-text-4'),
+        html.Div(id='live-update-text-5'),
 
         html.Div(dcc.Input(id='input-on-submit', type='text')),
     html.Div(id='container-button-basic',
@@ -79,9 +88,9 @@ def scrape_torrent_files(n_clicks, value):
         return ""
     if value.isnumeric():
         value = int(value)
-        thread = Thead(target=execute_scrapping,args=(value))
-        thread.start()
         ProgressManager().create_progress("selenium",scrapeNum=value)
+        thread = Thread(target=execute_scrapping,args=(value,))
+        thread.start()
         return "Scrapping {} files !".format(value * 8)
     return ""
 
@@ -107,6 +116,16 @@ def print_num_of_torrents(value):
     if value.isnumeric():
         ProgressManager().write_line("This will fetch {} torrent files.".format(int(value) * 8))
         return ""
+
+@app.callback(
+    Output('live-update-text-5', 'children'),
+    Input('purge-data-btn', 'n_clicks', ),
+    prevent_initial_call=True
+)
+def purge_data_func(n_clicks):
+    purge_runs()
+    ProgressManager().write_line("Deleted the previous data !")
+    return ""
 
 
 @app.callback(Output('live-update-text', 'children'),
