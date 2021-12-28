@@ -9,6 +9,8 @@ import json
 import requests
 import os
 
+from progress import ProgressManager
+
 category_urls = [
         "https://ettv.unblockit.bz/torrents.php?parent_cat=TV&parent_cat=TV&sort=seeders&order=desc",
         "https://ettv.unblockit.bz/torrents.php?parent_cat=Movies&parent_cat=Movies&sort=seeders&order=desc",
@@ -70,6 +72,10 @@ def execute_scrapping(n,docker=False):
         wait = 5
         for torrent_url in category_urls:
             print("FETCHING URL :", torrent_url)
+
+            # progress
+            ProgressManager().add_progress("fetching : {}".format(torrent_url))
+
             driver.get(torrent_url)
             time.sleep(wait)
             wait = 2
@@ -153,6 +159,7 @@ def execute_scrapping(n,docker=False):
                 continue
             #print("Your file is : {} MB.".format(filesize))
             print("DOWNLOADING THE FILE")
+            ProgressManager().add_progress("downloading : {}".format(torrentFilename))
             fileDict[torrentFilename] = {"size": filesize, "cat": category, "lang": language}
             res = requests.get(torrentFileUrl)
             with open("bulkTorrents/" + torrentFilename, 'wb') as file:
@@ -165,6 +172,7 @@ def execute_scrapping(n,docker=False):
 
         if docker:
             vdisplay.stop()
+    ProgressManager().write_line("Finished scrapping all the files !")
 
 if __name__ == '__main__':
     """
