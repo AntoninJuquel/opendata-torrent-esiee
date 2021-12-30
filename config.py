@@ -8,6 +8,9 @@ def get_config():
         for line in text_lines:
             if "=" in line:
                 key_value = line.split("=")
-                text_values[key_value[0]] = int(key_value[1])
+                if key_value[1].isnumeric():
+                    text_values[key_value[0]] = int(key_value[1])
+                else:
+                    text_values[key_value[0]] = key_value[1]
     return text_values
 

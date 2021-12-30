@@ -10,16 +10,19 @@ import requests
 import os
 
 from progress import ProgressManager
+from config import get_config
+
+root_url = get_config()["root_url"]
 
 category_urls = [
-        "https://ettv.unblockit.bz/torrents.php?parent_cat=TV&parent_cat=TV&sort=seeders&order=desc",
-        "https://ettv.unblockit.bz/torrents.php?parent_cat=Movies&parent_cat=Movies&sort=seeders&order=desc",
-        "https://ettv.unblockit.bz/torrents.php?parent_cat=Software&parent_cat=Software&sort=seeders&order=desc",
-        "https://ettv.unblockit.bz/torrents.php?parent_cat=Music&parent_cat=Music&sort=seeders&order=desc",
-        "https://ettv.unblockit.bz/torrents.php?parent_cat=Games&parent_cat=Games&sort=seeders&order=desc",
-        "https://ettv.unblockit.bz/torrents.php?parent_cat=Anime&parent_cat=Anime&sort=seeders&order=desc",
-        "https://ettv.unblockit.bz/torrents.php?parent_cat=Books&parent_cat=Books&sort=seeders&order=desc",
-        "https://ettv.unblockit.bz/torrents.php?parent_cat=Adult&parent_cat=Adult&sort=seeders&order=desc",
+    ("%s/torrents.php?parent_cat=TV&parent_cat=TV&sort=seeders&order=desc" % root_url),
+    ("%s/torrents.php?parent_cat=Movies&parent_cat=Movies&sort=seeders&order=desc" % root_url),
+    ("%s/torrents.php?parent_cat=Software&parent_cat=Software&sort=seeders&order=desc" % root_url),
+    ("%s/torrents.php?parent_cat=Music&parent_cat=Music&sort=seeders&order=desc" % root_url),
+    ("%s/torrents.php?parent_cat=Games&parent_cat=Games&sort=seeders&order=desc" % root_url),
+    ("%s/torrents.php?parent_cat=Anime&parent_cat=Anime&sort=seeders&order=desc" % root_url),
+    ("%s/torrents.php?parent_cat=Books&parent_cat=Books&sort=seeders&order=desc" % root_url),
+    ("%s/torrents.php?parent_cat=Adult&parent_cat=Adult&sort=seeders&order=desc" % root_url),
 ]
 
 def getfilesize(filesize):
@@ -60,8 +63,8 @@ def execute_scrapping(n,docker=False):
     driver = uc.Chrome(options=options,headless=False)
 
     with driver:
-        driver.get('https://unblockit.bz/')
-        url = "https://ettv.unblockit.bz/"
+        url = "%s/" % root_url
+        driver.get(url)
         ettv = driver.find_element_by_partial_link_text('ETTV')
         #ettv.click()
         #time.sleep(8)
@@ -114,7 +117,7 @@ def execute_scrapping(n,docker=False):
             url = match
             time.sleep(2)
             if match.startswith("/torrent"):
-                url = "https://ettv.unblockit.bz" + match
+                url = root_url + match
             driver.get(url)
             time.sleep(1)
             html = driver.page_source
