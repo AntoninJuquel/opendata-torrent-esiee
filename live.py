@@ -1,8 +1,8 @@
 import datetime
 import dash
 from dash import State
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 import plotly
 from app import get_bar_fig, get_geo_fig
 from dash.dependencies import Input, Output
@@ -88,7 +88,6 @@ def scrape_torrent_files(n_clicks, value):
         return ""
     if value.isnumeric():
         value = int(value)
-        ProgressManager().create_progress("selenium",scrapeNum=value)
         thread = Thread(target=execute_scrapping,args=(value,))
         thread.start()
         return "Scrapping {} files !".format(value * 8)

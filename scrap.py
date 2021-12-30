@@ -40,7 +40,7 @@ def getfilesize(filesize):
     elif unit == "KB":
         return num / 1000
     else :
-        return None 
+        return None
 
 def execute_scrapping(n,docker=False):
     """
@@ -52,6 +52,7 @@ def execute_scrapping(n,docker=False):
     fenêtre virtuelle
     """
     options = uc.ChromeOptions()
+    ProgressManager().create_progress("selenium", scrapeNum=n)
     if docker:
         vdisplay = Xvfb(width=800, height=1280)
         vdisplay.start()
@@ -65,14 +66,10 @@ def execute_scrapping(n,docker=False):
     with driver:
         url = "%s/" % root_url
         driver.get(url)
-        ettv = driver.find_element_by_partial_link_text('ETTV')
-        #ettv.click()
         print("waiting for cloudfare")
-        time.sleep(8)
-        #movies = driver.find_element_by_partial_link_text('TV Shows')
-        #movies.click()
+        wait = get_config()["wait"]
+        time.sleep(get_config()["wait-safe-cloudfare"])
         all_matches = []
-        wait = 5
         for torrent_url in category_urls:
             print("FETCHING URL :", torrent_url)
 
