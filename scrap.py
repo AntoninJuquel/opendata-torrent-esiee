@@ -67,10 +67,10 @@ def execute_scrapping(n,docker=False):
         driver.get(url)
         ettv = driver.find_element_by_partial_link_text('ETTV')
         #ettv.click()
-        #time.sleep(8)
+        print("waiting for cloudfare")
+        time.sleep(8)
         #movies = driver.find_element_by_partial_link_text('TV Shows')
         #movies.click()
-        print("waiting for cloudfare")
         all_matches = []
         wait = 5
         for torrent_url in category_urls:
@@ -81,7 +81,6 @@ def execute_scrapping(n,docker=False):
 
             driver.get(torrent_url)
             time.sleep(wait)
-            wait = 2
             html = driver.page_source
             matches_raw = re.findall(r'<a[^>]* href="([^"]*)"', html)
             matches = []
