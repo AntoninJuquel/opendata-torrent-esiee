@@ -13,11 +13,11 @@ import country_converter as coco
 init_notebook_mode(connected=True)
 def get_geo_fig():
   """
-  Cette fonction va lire les fichiers dans le dossiers runs
+  Cette fonction va lire le json json/geo.json
   et va retourner figure plotly qui est une carte du monde
   """
   ps.parse("runs/")
-  df = pd.read_json("data.json")
+  df = pd.read_json("json/geo.json")
 
   geo_data = []
   
@@ -37,29 +37,27 @@ def get_geo_fig():
                 sizemode = 'area'
             )))
 
-  fig_title = 'Torrent'
+  fig_title = 'Répartition des téléchargements de fichiers torrent par pays'
   layout = dict(title={'text':fig_title, 'x':0.5})
-
   fig = go.Figure(data=geo_data, layout=layout)
   return fig
 
 def get_bar_fig():
   """
-  Cette fonction va lire les fichiers dans le dossiers runs et les parser
+  Cette fonction va lire le json json/bar.json
   et va retourner un histogramme
   """
   ps.parse("runs/")
-  df = pd.read_json("final.json")
+  df = pd.read_json("json/bar.json")
 
   bar_data = []
   
-
   for country in df:
       bar_data.append(go.Bar(name=country, 
                   x=df[country]["sizes"], y=df[country]["amounts"],
                   text=country, textposition='auto',
                   textfont=dict(color='white')))
-  fig_title = 'Torrent'
+  fig_title = 'Volume des téléchargements de fichiers torrent par taille (en mo) par pays'
   layout = dict(title={'text':fig_title, 'x':0.5},
                 barmode='stack', 
                 xaxis_title="Taille en mo",
