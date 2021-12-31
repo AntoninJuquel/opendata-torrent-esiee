@@ -37,7 +37,7 @@ def get_geo_fig():
                 sizemode = 'area'
             )))
 
-  fig_title = 'Répartition des téléchargements de fichiers torrent par pays'
+  fig_title = 'Répartition des téléchargements de fichiers torrent dans le monde'
   layout = dict(title={'text':fig_title, 'x':0.5})
   fig = go.Figure(data=geo_data, layout=layout)
   return fig
