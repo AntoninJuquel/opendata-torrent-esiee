@@ -1,5 +1,8 @@
 # Open data torrent
 
+## Raport d'analyse
+
+# User Guide
 ## Install
 
 Prerequisites :
@@ -34,7 +37,7 @@ Once you installed the project you just have to do :
 ``` shell
 python live.py
 ```
-
+# Developper Guide
 ## Configuration
 
 For configuration please edit the config.txt file a sample is provided for you
