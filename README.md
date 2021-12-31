@@ -1,9 +1,11 @@
 # Open data torrent
 
-## Raport d'analyse
+## Raport d'Analyse
 
-# User Guide
-## Install
+- reflète bien les résultats obtenus ces résultats sont commentés sa forme est de qualité (structuration, rédaction, etc...)
+
+## User Guide
+### Install
 
 Prerequisites :
 - docker
@@ -30,15 +32,15 @@ source env/bin/activate # recommended to use a virtual environment
 pip install -r requirements.txt
 ```
 
-## Usage
+### Usage
 
 Once you installed the project you just have to do :
 
 ``` shell
 python live.py
 ```
-# Developper Guide
-## Configuration
+## Developper Guide
+### Configuration
 
 For configuration please edit the config.txt file a sample is provided for you
 
