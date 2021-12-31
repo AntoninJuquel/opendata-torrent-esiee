@@ -1,5 +1,4 @@
 import os, json
-import pandas as pd
 
 def sizeToIntervalStr(size):
   sizeint = int(float(size))
@@ -7,67 +6,59 @@ def sizeToIntervalStr(size):
   return f"{hundreds} - {hundreds + 99}"
 
 def parse(path_to_json):
-    json_files = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
-    my_dict = {}
-    data = {}
-    for j in json_files:
-        # Opening JSON file
-        f = open(path_to_json + j,"r")
-        
-        # returns JSON object as
-        # a dictionary
-        data[j] = json.load(f)
-        f.close()
-    with open('data.json', 'w') as outfile:
-        json.dump(data, outfile, indent= 4)
-
-    data = {}
-    final = {
+    """
+    Cette fonction va lire les fichiers dans le dossiers runs et les parser
+    pour ecrire les fichiers json/bar.json et json/geo.json
+    """
+    json_files_name = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
+    tmp = {}
+    bar = {
         "abs": 
         {
             "sizes":[], 
             "amounts":[]
         }
     }
-    for j in json_files:
-        # Opening JSON file
-        f = open(path_to_json + j,"r")
-        
-        # returns JSON object as
-        # a dictionary
-        data = json.load(f)
-        for country in data["countries"]:
-            if country in my_dict:
-                if data["size"] in my_dict[country]:
-                    my_dict[country][data["size"]] += data["countries"][country]
+    geo = {}
+    for json_file_name in json_files_name:
+        # Ouverture et ajout des données du fichier aux données geographiques
+        with open(path_to_json + json_file_name,"r") as outfile:
+            geo[json_file_name] = json.load(outfile)
+
+        # Cumul du nombre de téléchargements par taille de fichier par pays
+        for country in geo[json_file_name]["countries"]:
+            if country in tmp:
+                if geo[json_file_name]["size"] in tmp[country]:
+                    tmp[country][geo[json_file_name]["size"]] += geo[json_file_name]["countries"][country]
                 else:
-                    my_dict[country][data["size"]] = data["countries"][country]
+                    tmp[country][geo[json_file_name]["size"]] = geo[json_file_name]["countries"][country]
             else:
-                my_dict[country] = { data["size"]: data["countries"][country] }
+                tmp[country] = { geo[json_file_name]["size"]: geo[json_file_name]["countries"][country] }
 
-            if(data["size"] not in final["abs"]["sizes"]):
-                final["abs"]["sizes"].append(data["size"])
-                final["abs"]["amounts"].append(0)
-                final["abs"]["sizes"] = sorted(final["abs"]["sizes"])
-        f.close()
+            # Calibrage de l'axe des abscisses
+            if(geo[json_file_name]["size"] not in bar["abs"]["sizes"]):
+                bar["abs"]["sizes"].append(geo[json_file_name]["size"])
+                bar["abs"]["amounts"].append(0)
+                bar["abs"]["sizes"] = sorted(bar["abs"]["sizes"])
+            
+            # On trie les tailles des fichier
+            sorted_items = sorted(tmp[country].items())
+            bar[country] = {"sizes":[], "amounts":[]}
+            for item in sorted_items:
+                bar[country]["sizes"].append(str(item[0]))
+                bar[country]["amounts"].append(item[1])
+            
+            # Transformation des données chiffrées en intervales de 100mo
+            bar[country]["sizes"] = [sizeToIntervalStr(size) for size in bar[country]["sizes"]]
+
+    with open('json/geo.json', 'w') as outfile:
+        json.dump(geo, outfile, indent= 4)
     
-    final["abs"]["sizes"] = [str(x) for x in final["abs"]["sizes"]]
+    # Calibrage de l'axe des abscisses
+    bar["abs"]["sizes"] = [str(x) for x in bar["abs"]["sizes"]]
+    bar["abs"]["sizes"] = [sizeToIntervalStr(size) for size in bar["abs"]["sizes"]]
 
-    with open('my_dict.json', 'w') as outfile:
-        json.dump(my_dict, outfile, indent= 4)
+    with open('json/bar.json', 'w') as outfile:
+        json.dump(bar, outfile, indent= 4)
 
-    for country in my_dict:
-        a_test = my_dict[country]
-        dictionary_items = a_test.items()
-        sorted_items = sorted(dictionary_items)
-        new_dict = {"sizes":[], "amounts":[]}
-        for tpl in sorted_items:
-            new_dict["sizes"].append(str(tpl[0]))
-            new_dict["amounts"].append(tpl[1])
-        final[country] = new_dict
-    
-    for country in final:
-        final[country]["sizes"] = [sizeToIntervalStr(size) for size in final[country]["sizes"]]
-
-    with open('final.json', 'w') as outfile:
-        json.dump(final, outfile, indent= 4)
+parse("runs/")
