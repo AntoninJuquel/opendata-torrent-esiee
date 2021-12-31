@@ -10,7 +10,7 @@ import plotly.express as px
 import parse as ps
 import country_converter as coco
 
-init_notebook_mode(connected=True)
+#init_notebook_mode(connected=True)
 def get_geo_fig():
   """
   Cette fonction va lire le json json/geo.json
@@ -36,6 +36,9 @@ def get_geo_fig():
                 line_width=0.25,
                 sizemode = 'area'
             )))
+
+  if len(df) == 0:
+    geo_data.append(go.Scattergeo())
 
   fig_title = 'Répartition des téléchargements de fichiers torrent dans le monde'
   layout = dict(title={'text':fig_title, 'x':0.5})

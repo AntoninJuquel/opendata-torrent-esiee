@@ -10,7 +10,6 @@ def parse(path_to_json):
     Cette fonction va lire les fichiers dans le dossiers runs et les parser
     pour ecrire les fichiers json/bar.json et json/geo.json
     """
-    json_files_name = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
     tmp = {}
     bar = {
         "abs": 
@@ -20,6 +19,15 @@ def parse(path_to_json):
         }
     }
     geo = {}
+
+    if os.path.exists(path_to_json) == False:
+        with open('json/geo.json', 'w') as outfile:
+            json.dump(geo, outfile, indent= 4)
+        with open('json/bar.json', 'w') as outfile:
+            json.dump(bar, outfile, indent= 4)
+        return
+    
+    json_files_name = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
     for json_file_name in json_files_name:
         # Ouverture et ajout des données du fichier aux données geographiques
         with open(path_to_json + json_file_name,"r") as outfile:
@@ -60,5 +68,3 @@ def parse(path_to_json):
 
     with open('json/bar.json', 'w') as outfile:
         json.dump(bar, outfile, indent= 4)
-
-parse("runs/")
