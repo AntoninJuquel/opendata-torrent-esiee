@@ -39,6 +39,12 @@ Une fois les dépendances installées, vous pouvez lancer le fichier main.py
 ``` shell
 python main.py
 ```
+
+- Une fois arrivé sur le dashboard, supprmier les données existante cliquez sur "purge data"
+- Si vous voulez plus de fichiers torrents que ceux fourni dans le projet par défaut, saisissez le nombre de fichiers souhaité et cliquez sur scrape new torrents
+- une fois que vous avez vos fichiers torrents, cliquez sur fetch new data, pour analyser vos fichers
+- le dashboard se met à jour régulièrement, vous pouvez avoir du mal à zoomer sur les données, avant de zoomer, veuillez mettre sur pause le dashboard avec le boutton pause en haut à gauche de l'écran
+
 ### Configuration
 
 L'exemple du fichier de configuration :
