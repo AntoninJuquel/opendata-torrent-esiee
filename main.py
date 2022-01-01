@@ -4,8 +4,7 @@ import dash
 from dash import State
 from dash import dcc
 from dash import html
-import plotly
-from app import get_bar_fig, get_geo_fig
+from figures import get_bar_fig, get_geo_fig
 from dash.dependencies import Input, Output
 from progress import ProgressManager
 
@@ -30,8 +29,8 @@ app.layout = html.Div(
         html.Button(children='pause', id='pause-btn', n_clicks=0),
         html.Button(children='fetch new data', id='fetch-new-data-btn', n_clicks=0),
         html.Div(dcc.Input(id='num-of-torrent-input', type='text')),
-        html.H6("Please enter the number of torrent you wish to scrape per category, then press on 'scrape more torrents'"),
-        html.Button(children='scrape more torrents', id='scrape-new-torrents-btn', n_clicks=0),
+        html.H6("Please enter the number of torrent you wish to scrape per category, then press on 'scrape new torrents'"),
+        html.Button(children='scrape new torrents', id='scrape-new-torrents-btn', n_clicks=0),
         html.Button(children='purge data', id='purge-data-btn', n_clicks=0, style=red_button_style),
         html.Div(id='live-update-text'),
         html.Div(id='live-update-text-2'),
