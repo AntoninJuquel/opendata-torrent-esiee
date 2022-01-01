@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 def get_config():
+    """
+    Cette fonction lis le fichier de configuration
+    """
     with open("config.txt","r") as file:
         text = file.read()
         text_lines = text.split("\n")

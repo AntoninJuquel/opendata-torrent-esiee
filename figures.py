@@ -79,4 +79,7 @@ def get_bar_fig():
 
 
 if __name__ == '__main__':
+  """
+  Si ce fichier est appelé directement, retourne la figure "carte"
+  """
   plotly.offline.plot(get_geo_fig(), filename='stackbar.html')

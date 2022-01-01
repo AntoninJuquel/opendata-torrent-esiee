@@ -54,12 +54,18 @@ app.layout = html.Div(
 @app.callback(Output('live-update-graph', 'figure'),
               Input('interval-component', 'n_intervals'))
 def update_graph_live(n):
+    """
+    Cette fonction retourne l'histogramme en prévoyant les exceptions
+    """
     return update_bar_wrapped()
 
 
 @app.callback(Output('live-update-map', 'figure'),
               Input('interval-component', 'n_intervals'))
 def update_map_live(n):
+    """
+    Cette fonction retourne la carte en prévoyant les exceptions
+    """
     return update_map_wrapped()
 
 # button
@@ -70,6 +76,9 @@ def update_map_live(n):
     Input('pause-btn', 'n_clicks')
 )
 def pause_play(n_clicks):
+    """
+    Cette fonction s'occupe du boutton pause
+    """
     if n_clicks % 2 == 0:
         return False, "Pause"
     else :
@@ -82,6 +91,9 @@ def pause_play(n_clicks):
     State('num-of-torrent-input', 'value'),
 )
 def scrape_torrent_files(n_clicks, value):
+    """
+    Cette fonction est appelé avec la pression du bouton scrap et va lancer selenium
+    """
     if value is None:
         return ""
     if value.isnumeric():
@@ -96,6 +108,9 @@ def scrape_torrent_files(n_clicks, value):
     Input('fetch-new-data-btn', 'n_clicks'),
 )
 def crawl_through_torrent_files(n_clicks):
+    """
+    Cette fonction est appelé avec la pression du fetch new data, et va analyser tout les fichiers torrents
+    """
     if n_clicks != 0:
         ProgressManager().create_progress("runs")
         thread = Thread(target=crawl_by_batch)
@@ -108,11 +123,13 @@ def crawl_through_torrent_files(n_clicks):
     Input('num-of-torrent-input', 'value')
 )
 def print_num_of_torrents(value):
+    """
+    Cette fonction montre le nombre de fichiers torrent qu'il va installer
+    """
     if value is None:
         return ""
     if value.isnumeric():
-        ProgressManager().write_line("This will fetch {} torrent files.".format(int(value) * 8))
-        return ""
+        return "This will fetch {} torrent files.".format(int(value) * 8)
 
 @app.callback(
     Output('live-update-text-5', 'children'),
@@ -120,6 +137,10 @@ def print_num_of_torrents(value):
     prevent_initial_call=True
 )
 def purge_data_func(n_clicks):
+    """
+    Cette fonction va supprimer tout les fichiers dans le dossiers runs/
+    ça correspond à supprmier les données récoltés
+    """
     purge_runs()
     ProgressManager().write_line("Deleted the previous data !")
     return ""
@@ -128,10 +149,18 @@ def purge_data_func(n_clicks):
 @app.callback(Output('live-update-text', 'children'),
               Input('interval-component', 'n_intervals'))
 def show_progress(n):
+    """
+    Cette fonction va lire le fichier progress.txt pour informer
+    à l'utilisateur de la progression en cours
+    """
     text = ProgressManager().show()
     return text
 
 def update_map_wrapped():
+    """
+    Cette fonction retourne une carte et prévois le cas où
+    il y aurait une erreure
+    """
     try:
         return get_geo_fig()
     except:
@@ -139,6 +168,11 @@ def update_map_wrapped():
         update_map_wrapped()
 
 def update_bar_wrapped():
+
+    """
+    Cette fonction retourne un histogramme et prévois le cas où
+    il y aurait une erreure
+    """
     try:
         return get_bar_fig()
     except:
