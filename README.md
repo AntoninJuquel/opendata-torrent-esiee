@@ -1,5 +1,7 @@
 # Open data torrent
 
+Le projet open data torrent a pour but d'analyser un certain nombre de fichiers torrents de toute les catégories, et d'analyser, la taille de fichier les plus téléchargés, les pays qui télécharge le plus, et de voir sur la carte où se situe les personne ayant téléchargé.
+
 ## Raport d'Analyse
 
 - reflète bien les résultats obtenus ces résultats sont commentés sa forme est de qualité (structuration, rédaction, etc...)
