@@ -9,6 +9,9 @@ from progress import ProgressManager
 
 
 def threaded_crawl(file,data):
+    """
+    Cette fonction lance l'analyse d'un fichier torrent
+    """
     mypath = "bulkTorrents"
     crawler = TorrentCrawler(mypath + "/" + file,time=20)
     ip = crawler.get_peers_raw()
@@ -33,6 +36,9 @@ def threaded_crawl(file,data):
         outfile.write(jsonString)
 
 def crawl_by_batch():
+    """
+    Cette fonction lance les analyses par batch de 10 fichiers torrent en parralèle
+    """
     mypath = "bulkTorrents"
     files = [f for f in listdir(mypath) if isfile(join(mypath, f))]
     f = open('bulkTorrents/index.json','r')
@@ -62,6 +68,10 @@ def crawl_by_batch():
 
 
 def purge_runs():
+    """
+    Cette fonction supprime tout les fichiers dans le dossier runs
+    et ainsi supprime toutes les données récoltés
+    """
     mypath = "runs/"
     files = [f for f in listdir(mypath) if isfile(join(mypath, f))]
     for f in files:

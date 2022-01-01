@@ -1,5 +1,5 @@
 selenium_in_docker=0
 btdht_in_docker=0
 root_url=https://ettv.unblockit.tv
-wait=1
-wait-safe-cloudfare=60
+wait=3
+wait-safe-cloudfare=10
