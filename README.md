@@ -67,6 +67,24 @@ Voici quelques informations utiles pour pouvoir développer sur notre projet
 
 ### Diagramme
 
+``` mermaid
+graph TD
+    A[main.py] -->|click sur fetch new data button| B(multithreadcrawler.py)
+    A[main.py] -->|click sur scrap new torrents| C(scrap.py)
+    A[main.py] -->|après avoir saisi le nombre de fichiers, montre le nombre de fichier total| D(progress.py)
+    A[main.py] -->|appelle en continu les figures| E(figures.py)
+    A[main.py] -->|appelle en continu pour savoir la progression| D(progress.py)
+    B[multithreadcrawler.py] -->|appelle les fonctions pour analyser les fichiers torrents| G(crawl.py)
+    D[progress.py] -->|écris et lis| H(progress.txt)
+    E[figures.py] -->|parse les fichiers en appelant| I(parse.py)
+    C[scrap.py] -->|écrire la progression| D(progress.py)
+    B[multithreadcrawler.py] -->|écrire la progression| D(progress.py)
+    C[scrap.py] -->|Lis les configurations| J(config.py)
+    J[config.py] -->|Lis le fichier| K(config.txt)
+    L[containers.py] -->|Crée une conteneur à partir de| M(Dockerfile)
+```
+
+
 ### config.py
 Ce fichier va lire le fichier config.txt et va retourner un dictionnaire dans lequel on pourra réccupérer les informations entré par l'utilisateur
 
