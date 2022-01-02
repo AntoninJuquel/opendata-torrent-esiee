@@ -4,8 +4,6 @@ Le projet open data torrent a pour but d'analyser un certain nombre de fichiers 
 
 ## Raport d'Analyse
 
-- reflète bien les résultats obtenus ces résultats sont commentés sa forme est de qualité (structuration, rédaction, etc...)
-
 Les données que nous allons utiliser sont issues de fichiers torrent téléchargés à partir du site ... et dont on peut extraire les données grâce à ... et à ... pour décoder les adresses IP et savoir dans quel pays ce fichier est téléchargé.
 
 A partir de ces données on a pu construire 2 figures pertinantes pour les analyser:
