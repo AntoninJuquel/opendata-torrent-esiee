@@ -6,6 +6,23 @@ Le projet open data torrent a pour but d'analyser un certain nombre de fichiers 
 
 - reflète bien les résultats obtenus ces résultats sont commentés sa forme est de qualité (structuration, rédaction, etc...)
 
+Les données que nous allons utiliser sont issues de fichiers torrent téléchargés à partir du site ... et dont on peut extraire les données grâce à ... et à ... pour décoder les adresses IP et savoir dans quel pays ce fichier est téléchargé.
+
+A partir de ces données on a pu construire 2 figures pertinantes pour les analyser:
+- Un histogramme
+
+    La première figure est un histrogramme qui représente le nombre de téléchargements de fichiers torrent dans chaque pays et par volume (en mo) par intervalle de 100. Ainsi sur un intervalle de 100mo sur l'axe des abscisses on retrouve le nombre de téléchargement total dans le monde de ces fichiers sur l'axe des ordonnées, une barre séparée par pays dont le nom est noté en norme [ISO 3166-1 alpha-2](https://fr.wikipedia.org/wiki/ISO_3166-1_alpha-2) et la couleur est choisie aléatoirement.
+    
+    Cet histogramme devient rapidement illisible car 1 fichier torrent peut être téléchargé dans plusieurs pays différents au même moment. 
+
+    On a remarqué plusieurs tendances, tout d'abord le nombre de téléchargements est important pour les fichiers dont la taille est inférieure à 500 mo ce qui correspond plutôt à des fichiers musicaux, et aussi important pour les fichiers dont la taille est superieure 20 go, c'est à dire des programmes comme des jeux ou des logiciels.
+    
+    Enfin les pays qui dans lesquelles sont le plus téléchargés les fichiers sont surtout téléchargés dans des pays d'Europe.
+
+- Une carte
+    
+    La deuxième figure est une carte du monde qui représente pour **chaque** fichier la localisation de ses téléchargements, ainsi on obtient un nuage de point qui peut confirmer la tendance décrite précedement et nous donne une bonne idée visuelle des zones à fort taux de téléchargement. Le taille des points évolue avec le logarithme de la taille des fichiers.
+
 ## Guide d'utilisateur
 ### Installation
 
