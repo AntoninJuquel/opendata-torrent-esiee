@@ -10,6 +10,7 @@ import plotly.express as px
 import parse as ps
 import country_converter as coco
 import json
+from urllib.parse import unquote
 
 #init_notebook_mode(connected=True)
 def get_geo_fig():
@@ -27,11 +28,14 @@ def get_geo_fig():
 
   geo_data = []
 
+  start = '-'
+  end = '.torrent.json'
+
   for data in df:
       for locations in df[data]["locs"]:
         lat_lng = locations.split(",")
         geo_data.append(go.Scattergeo(
-              name=f"",
+              name=f"{unquote(''.join((data.split(start))[1:]).split(end)[0])}",
               text = f"{df[data]['size']} mo",
               lat = [lat_lng[0]],
               lon = [lat_lng[1]],
@@ -40,7 +44,7 @@ def get_geo_fig():
                   color = 'rgb(0,0,0)',
                   line_color='rgb(255,255,255)',
                   line_width=0.25,
-                  sizemode = 'area'
+                  sizemode = 'area',
               )))
   else:
     geo_data.append(go.Scattergeo())
@@ -82,4 +86,5 @@ if __name__ == '__main__':
   """
   Si ce fichier est appelé directement, retourne la figure "carte"
   """
-  plotly.offline.plot(get_geo_fig(), filename='stackbar.html')
+  plotly.offline.plot(get_geo_fig(), filename='html/geo.html')
+  plotly.offline.plot(get_bar_fig(), filename='html/bar.html')
