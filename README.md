@@ -132,7 +132,7 @@ Ce fichier lis les fichiers json du dossier runs/ et va parser en fichier json/b
 ### progress.py
 Ce fichier contient toute la logique de la progression
 
-### progress.py
+### scrap.py
 Ce fichier va lancer le scrapping des fichiers torrent à partir du site internet ETTV
 
 ## Problèmes rencontrés
