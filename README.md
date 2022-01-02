@@ -9,17 +9,17 @@ Les données que nous allons utiliser sont issues de fichiers torrent téléchar
 A partir de ces données on a pu construire 2 figures pertinantes pour les analyser:
 - Un histogramme
 
-    La première figure est un histrogramme qui représente le nombre de téléchargements de fichiers torrent dans chaque pays et par volume (en mo) par intervalle de 100. Ainsi sur un intervalle de 100mo sur l'axe des abscisses on retrouve le nombre de téléchargement total dans le monde de ces fichiers sur l'axe des ordonnées, une barre séparée par pays dont le nom est noté en norme [ISO 3166-1 alpha-2](https://fr.wikipedia.org/wiki/ISO_3166-1_alpha-2) et la couleur est choisie aléatoirement.
+    La première figure est un histogramme qui représente le nombre de téléchargements de fichiers torrent dans chaque pays et par volume (en mo) par intervalle de 100. Ainsi sur un intervalle de 100mo sur l'axe des abscisses, on retrouve le nombre de téléchargements total dans le monde de ces fichiers sur l'axe des ordonnées, une barre séparée par pays dont le nom est noté en norme [ISO 3166-1 alpha-2](https://fr.wikipedia.org/wiki/ISO_3166-1_alpha-2) et la couleur est choisie aléatoirement.
     
-    Cet histogramme devient rapidement illisible car 1 fichier torrent peut être téléchargé dans plusieurs pays différents au même moment. 
+    Cet histogramme devient rapidement illisible, car 1 fichier torrent peut être téléchargé dans plusieurs pays différents au même moment. 
 
-    On a remarqué plusieurs tendances, tout d'abord le nombre de téléchargements est important pour les fichiers dont la taille est inférieure à 500 mo ce qui correspond plutôt à des fichiers musicaux, et aussi important pour les fichiers dont la taille est superieure 20 go, c'est à dire des programmes comme des jeux ou des logiciels.
+    On a remarqué plusieurs tendances, tout d'abord le nombre de téléchargements est important pour les fichiers dont la taille est inférieure à 500 mo ce qui correspond plutôt à des fichiers musicaux, et est aussi important pour les fichiers dont la taille est supérieure 20 go, c'est à dire des programmes comme des jeux ou des logiciels.
     
-    Enfin les pays qui dans lesquelles sont le plus téléchargés les fichiers sont surtout téléchargés dans des pays d'Europe.
+    Enfin, les fichiers sont surtout téléchargés dans des pays d'Europe.
 
 - Une carte
     
-    La deuxième figure est une carte du monde qui représente pour **chaque** fichier la localisation de ses téléchargements, ainsi on obtient un nuage de point qui peut confirmer la tendance décrite précedement et nous donne une bonne idée visuelle des zones à fort taux de téléchargement. Le taille des points évolue avec le logarithme de la taille des fichiers.
+    La deuxième figure est une carte du monde qui représente pour **chaque** fichier la localisation des personnes qui le téléchargent, ainsi, on obtient un nuage de point qui peut confirmer la tendance décrite précédemment et nous donne une bonne idée visuelle des zones à fort taux de téléchargement. La taille des points évolue avec le logarithme de la taille des fichiers.
 
 ## Guide d'utilisateur
 ### Installation
