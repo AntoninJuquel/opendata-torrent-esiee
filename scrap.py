@@ -125,7 +125,9 @@ def execute_scrapping(n,docker=False):
             torrent_xpath = "/html/body/div/div[3]/div/div[2]/div[3]/div[1]/div[4]/fieldset/ul[1]/li[2]/a"
             try:
                 #torrentFileUrl = torrent_href.get_attribute("href")
-                a_tag = driver.find_element_by_xpath("//a[contains(@href, 'etorrent.click/torrents/')]")
+                #a_tag = driver.find_element_by_xpath("//a[contains(@href, 'etorrent.click/torrents/')]")
+                xpath_for_torrent_file = "/html/body/div/div[3]/div/div[2]/div[3]/div[1]/div[4]/fieldset/ul[1]/li[2]/a"
+                a_tag = driver.find_element_by_xpath(xpath_for_torrent_file)
                 torrentFileUrl = a_tag.get_attribute("href")
                 print("torrent url is :",torrentFileUrl)
             except:
@@ -178,4 +180,4 @@ if __name__ == '__main__':
     Si on appelle scrap.py directement, on va effectuer un scap
     qui n'est pas sous docker et qui aura un n = 10
     """
-    execute_scrapping(10)
+    execute_scrapping(2)
